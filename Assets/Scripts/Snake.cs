@@ -14,6 +14,7 @@ public class Snake : MonoBehaviour {
     public GameManager gameManager;
 
     int initialSize = 4;
+    bool movedPostDirectionChange = true;
 
 
     public void UpdateMovement() {
@@ -26,26 +27,40 @@ public class Snake : MonoBehaviour {
             Mathf.Round(this.transform.position.y) + _direction.y,
             0.0f
         );
+        movedPostDirectionChange = true;
     }
 
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
-            // if single body then we can move in opposite direction 
-            if (segments.Count == 1 || _direction != Vector2.down) {
-                _direction = Vector2.up;
-            }
-        } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
-            if (segments.Count == 1 || _direction != Vector2.up) {
-                _direction = Vector2.down;
-            }
-        } else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
-            if (segments.Count == 1 || _direction != Vector2.right) {
-                _direction = Vector2.left;
-            }
-        } else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
-            if (segments.Count == 1 || _direction != Vector2.left) {
-                _direction = Vector2.right;
+        // reason for - movedPostDirectionChange 
+        // let's say when user is moving to right
+        // presses up and right in a very close interval, 
+        // in other words, before moving 1 grid upwards user presses the right
+        // in that case body collision was occurring
+        // movedPostDirectionChange prevents that situation
+
+        if (movedPostDirectionChange) {
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
+                // if single body then we can move in opposite direction 
+                if (segments.Count == 1 || _direction != Vector2.down) {
+                    _direction = Vector2.up;
+                    movedPostDirectionChange = false;
+                }
+            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
+                if (segments.Count == 1 || _direction != Vector2.up) {
+                    _direction = Vector2.down;
+                    movedPostDirectionChange = false;
+                }
+            } else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+                if (segments.Count == 1 || _direction != Vector2.right) {
+                    _direction = Vector2.left;
+                    movedPostDirectionChange = false;
+                }
+            } else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+                if (segments.Count == 1 || _direction != Vector2.left) {
+                    _direction = Vector2.right;
+                    movedPostDirectionChange = false;
+                }
             }
         }
     }
