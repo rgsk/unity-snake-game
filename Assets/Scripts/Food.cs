@@ -1,16 +1,32 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
 public class Food : MonoBehaviour {
     public BoxCollider2D gridArea;
+    public Snake snake;
+
     void Start() {
         RandomizePosition();
     }
 
     void RandomizePosition() {
-        var bounds = gridArea.bounds;
-        var x = Random.Range(bounds.min.x, bounds.max.x);
-        var y = Random.Range(bounds.min.y, bounds.max.y);
-        transform.position = new Vector3(Mathf.Round(x), Mathf.Round(y), 0.0f);
+        Bounds bounds = gridArea.bounds;
+        var excludedPairs = new List<Tuple<float, float>>();
+        foreach (var segment in snake.segments) {
+            var pair = Tuple.Create(segment.position.x, segment.position.y);
+            excludedPairs.Add(pair);
+        }
+        var selected = RandomNumberGenerator.RandomPairBetween(
+            minX: bounds.min.x,
+            maxX: bounds.max.x,
+            minY: bounds.min.y,
+            maxY: bounds.max.y,
+            excludedPairs: excludedPairs
+        );
+        var x = selected.Item1;
+        var y = selected.Item2;
+        transform.position = new Vector3(x, y, 0.0f);
     }
 
     void OnTriggerEnter2D(Collider2D other) {
