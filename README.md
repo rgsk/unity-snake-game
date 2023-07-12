@@ -1,10 +1,8 @@
 ## Resources referred
 
-- Code - [https://github.com/zigurous/unity-dino-game-tutorial](https://github.com/zigurous/unity-dino-game-tutorial)
-- Video - [https://www.youtube.com/watch?v=UPvW8kYqxZk&t=1s](https://www.youtube.com/watch?v=UPvW8kYqxZk&t=1s)
+- Code - [https://www.youtube.com/watch?v=U8gUnpeaMbQ](https://www.youtube.com/watch?v=U8gUnpeaMbQ)
+- Video - [https://github.com/zigurous/unity-snake-tutorial](https://github.com/zigurous/unity-snake-tutorial)
 
 ## Preview
 
-![Alt text](Pictures/Screenshot%202023-06-04%20at%205.38.43%20PM.png)
-
-![Alt text](Pictures/Screenshot%202023-06-04%20at%205.37.15%20PM.png)
+![Alt text](<Screenshot 2023-07-13 at 3.50.26 AM.png>)
