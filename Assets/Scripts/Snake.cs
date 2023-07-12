@@ -12,13 +12,21 @@ public class Snake : MonoBehaviour {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
-            _direction = Vector2.up;
+            if (_direction != Vector2.down) {
+                _direction = Vector2.up;
+            }
         } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
-            _direction = Vector2.down;
+            if (_direction != Vector2.up) {
+                _direction = Vector2.down;
+            }
         } else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
-            _direction = Vector2.left;
+            if (_direction != Vector2.right) {
+                _direction = Vector2.left;
+            }
         } else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
-            _direction = Vector2.right;
+            if (_direction != Vector2.left) {
+                _direction = Vector2.right;
+            }
         }
     }
     void FixedUpdate() {
