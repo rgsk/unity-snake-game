@@ -939,6 +939,7 @@ MonoBehaviour:
   scoreText: {fileID: 1322385852}
   highScoreText: {fileID: 482916355}
   snake: {fileID: 267980392}
+  food: {fileID: 270125902}
 --- !u!4 &1269588976
 Transform:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI highScoreText;
 
     public Snake snake;
+    public Food food;
 
     int levelSize = 3;
     int score;
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour {
         UpdateHighScore();
         UpdateScore(0);
         snake.ResetBody();
+        food.RandomizePosition();
     }
     private void UpdateHighScore() {
         var highScore = PlayerPrefs.GetInt("highScore", 0);

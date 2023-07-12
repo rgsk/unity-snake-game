@@ -62,13 +62,14 @@ public class Snake : MonoBehaviour {
             Destroy(segments[i].gameObject);
         }
         segments.Clear();
-        segments.Add(this.transform);
-
-        for (int i = 1; i < this.initialSize; i++) {
-            segments.Add(Instantiate(segmentPrefab));
-        }
-
         this.transform.position = Vector3.zero;
+        segments.Add(this.transform);
+        for (int i = 1; i < this.initialSize; i++) {
+            var segment = Instantiate(segmentPrefab);
+            segment.position = new Vector3(transform.position.x - i, transform.position.y, transform.position.z);
+            segments.Add(segment);
+        }
+        _direction = Vector2.right;
     }
 
     void OnTriggerEnter2D(Collider2D other) {

@@ -5,12 +5,7 @@ using System;
 public class Food : MonoBehaviour {
     public BoxCollider2D gridArea;
     public Snake snake;
-
-    void Start() {
-        RandomizePosition();
-    }
-
-    void RandomizePosition() {
+    public void RandomizePosition() {
         Bounds bounds = gridArea.bounds;
         var excludedPairs = new List<Tuple<float, float>>();
         foreach (var segment in snake.segments) {
