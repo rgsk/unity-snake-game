@@ -3,28 +3,31 @@ using System.Collections.Generic;
 
 public class Snake : MonoBehaviour {
     Vector2 _direction = Vector2.right;
-    public List<Transform> segments;
+    public List<Transform> segments = new List<Transform>();
     public Transform segmentPrefab;
+
+    public int initialSize = 4;
+
     void Start() {
-        segments = new List<Transform>();
-        segments.Add(this.transform);
+        ResetState();
     }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
-            if (_direction != Vector2.down) {
+            // if single body then we can move in opposite direction 
+            if (segments.Count == 1 || _direction != Vector2.down) {
                 _direction = Vector2.up;
             }
         } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
-            if (_direction != Vector2.up) {
+            if (segments.Count == 1 || _direction != Vector2.up) {
                 _direction = Vector2.down;
             }
         } else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
-            if (_direction != Vector2.right) {
+            if (segments.Count == 1 || _direction != Vector2.right) {
                 _direction = Vector2.left;
             }
         } else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
-            if (_direction != Vector2.left) {
+            if (segments.Count == 1 || _direction != Vector2.left) {
                 _direction = Vector2.right;
             }
         }
@@ -46,9 +49,26 @@ public class Snake : MonoBehaviour {
         segments.Add(segment);
     }
 
+    void ResetState() {
+        for (int i = 1; i < segments.Count; i++) {
+            Destroy(segments[i].gameObject);
+        }
+        segments.Clear();
+        segments.Add(this.transform);
+
+        for (int i = 1; i < this.initialSize; i++) {
+            segments.Add(Instantiate(segmentPrefab));
+        }
+
+        this.transform.position = Vector3.zero;
+    }
+
     void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Food") {
             Grow();
+        }
+        if (other.tag == "Obstacle") {
+            ResetState();
         }
     }
 }
